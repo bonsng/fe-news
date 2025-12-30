@@ -1,6 +1,9 @@
 import { header } from "./components/header";
 import { newsContent } from "./components/newsContents";
 import { rolling } from "./components/rolling";
+import "./styles/foundation.css";
+import "./styles/object.css";
+import "./styles/typo.css";
 
 const root = document.getElementById("app");
 
