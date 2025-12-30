@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-#main-container {
+.ns-main-container {
   outline: 1px solid red;
   padding: 58px 175px;
   width: 1280px;
