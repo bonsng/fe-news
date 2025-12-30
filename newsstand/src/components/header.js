@@ -11,6 +11,7 @@ export const header = () => {
   titleWrap.id = "title-wrap";
   const title = document.createElement("h1");
   title.classList.add("ns-title");
+  title.classList.add("text-strong");
   title.setAttribute("aria-label", "뉴스스탠드");
   title.textContent = "뉴스스탠드";
   titleWrap.appendChild(logo());
@@ -19,6 +20,9 @@ export const header = () => {
   // date container
   const dateWrap = document.createElement("div");
   dateWrap.classList.add("ns-date");
+  dateWrap.classList.add("typo");
+  dateWrap.classList.add("typo-display-medium16");
+
   const dateDiv = document.createElement("div");
   dateDiv.id = "date";
   dateDiv.innerText = getDate();
