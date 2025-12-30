@@ -86,6 +86,13 @@
   line-height: var(--line-height-22);
 }
 
+.typo-available-medium14 {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-r);
+  line-height: 100%;
+}
+
 /* hover-medium16 : $medium.M.underline */
 .typo-hover-medium16 {
   font-family: var(--font-family-base);

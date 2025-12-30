@@ -35,10 +35,25 @@
 
 #roll-wrapper {
   display: flex;
+  width: 930px;
+  height: 49px;
+  gap: 8px;
+  margin-top: 69px;
 }
 
 #rolling-card-wrapper {
   display: flex;
+  width: 461px;
+  /* padding: 16px; */
+  gap: 16px;
+  align-items: center;
+  padding-left: 16px;
+}
+#rolling-card-wrapper:hover {
+  cursor: pointer;
+}
+#rolling-card-wrapper:hover p {
+  text-decoration: underline;
 }
 
 .ns-controls {
