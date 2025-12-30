@@ -5,3 +5,11 @@
 .ns-header {
   display: flex;
 }
+
+#roll-wrapper {
+  display: flex;
+}
+
+#rolling-card-wrapper {
+  display: flex;
+}

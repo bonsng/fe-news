@@ -1,11 +1,15 @@
 import { header } from "./components/header";
+import { rolling } from "./components/rolling";
 
 const root = document.getElementById("app");
 
-// 메인 컨테이너 생성
+// 메인 컨테이너 생성 및 추가
 const mainContainer = document.createElement("div");
 mainContainer.id = "main-container";
-
-// 헤더 생성
 root.appendChild(mainContainer);
+
+// header
 mainContainer.append(header());
+
+// 최신 뉴스 롤링 파트
+mainContainer.append(rolling());
