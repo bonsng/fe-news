@@ -3,7 +3,7 @@ export function createLayout() {
     <header class="ns-header">
       <h1 class="ns-logo" aria-label="뉴스스탠드">뉴스스탠드</h1>
       <div class="ns-date">
-        <time datetime="2026-01-14">2026. 01. 14. 수요일</time>
+        <div id="date"></div>
       </div>
     </header>
 
