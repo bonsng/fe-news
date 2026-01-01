@@ -3,11 +3,11 @@ import pressData from "../data/pressData.json";
 // Function to get rolling data
 export const getRollingData = () => {
   return pressData
-    .filter((item) => item.relatedArticle?.length > 0)
+    .filter((item) => item.relatedArticles?.length > 0)
     .map((p) => ({
       pressName: p.press,
-      title: p.relatedArticle[0].title,
-      url: p.relatedArticle[0].link,
+      title: p.relatedArticles[0].title,
+      url: p.relatedArticles[0].link,
     }));
 };
 
