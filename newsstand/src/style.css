@@ -70,6 +70,51 @@
 .ns-controls {
   display: flex;
   justify-content: space-between;
+  height: 22px;
+  margin-top: 30px;
+}
+
+.ns-controls__left {
+  display: flex;
+  align-items: center;
+}
+
+.ns-controls__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ns-tabs {
+  height: 22px;
+}
+.ns-tab-left {
+  display: flex;
+  align-items: center;
+}
+.ns-tab-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ns-tab__badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ns-tabs {
+  display: flex;
+  width: 240px;
+  gap: 24px;
+}
+
+.ns-view-toggle--active svg path {
+  fill: var(--color-text-point);
 }
 
 /* Grid Styles */
@@ -78,6 +123,7 @@
   width: 930px;
   height: 388px;
   background-color: #d2dae0;
+  margin-top: 28px;
 }
 
 .ns-press-grid__list {

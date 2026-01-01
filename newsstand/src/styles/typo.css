@@ -58,6 +58,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-s);
   line-height: var(--line-height-22);
+  color: var(--color-text-white-weak);
 }
 
 /* === selected / available / hover 상태 텍스트 === */
@@ -66,8 +67,8 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-m);
+  color: var(--color-text-strong);
   line-height: var(--line-height-22);
-  text-decoration: underline;
 }
 
 /* selected-bold14 : $bold.R */
@@ -92,6 +93,7 @@
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-m);
   line-height: var(--line-height-22);
+  color: var(--color-text-weak);
 }
 
 .typo-available-medium14 {

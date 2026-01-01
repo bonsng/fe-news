@@ -1,53 +1,54 @@
 import { createEl } from "../lib/dom";
+import gridViewIcon from "../assets/grid-view.svg";
+import listViewIcon from "../assets/list-view.svg";
 
 export const createControls = () => {
   const html = `
       <div class="ns-controls__left">
         <div class="ns-tabs" role="tablist" aria-label="언론사 범위 선택">
-          <button
-            class="ns-tab ns-tab--active"
-            type="button"
-            role="tab"
+          <div
+            class="ns-tab-left typo-selected-bold16"
             aria-selected="true"
           >
             전체 언론사
-          </button>
+          </div>
 
-          <button
-            class="ns-tab"
-            type="button"
-            role="tab"
+          <div
+            class="ns-tab-right"
             aria-selected="false"
           >
-            내가 구독한 언론사
-            <span
-              class="ns-tab__badge"
+            <p class="typo-available-medium16">내가 구독한 언론사</p>
+             <span
+              class="ns-tab__badge typo-display-medium12 surface-brand-alt"
               aria-label="구독한 언론사 수"
             >
               8
             </span>
-          </button>
+          </div>
         </div>
       </div>
 
       <div class="ns-controls__right" aria-label="보기 방식 선택">
-        <button
-          class="ns-view-toggle ns-view-toggle--active"
-          type="button"
-          aria-pressed="true"
-          aria-label="그리드로 보기"
-        >
-          그리드
-        </button>
-
-        <button
+        <div
           class="ns-view-toggle"
           type="button"
           aria-pressed="false"
           aria-label="리스트로 보기"
         >
-          리스트
-        </button>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2V16H2V2H16ZM17.1 0H0.9C0.4 0 0 0.4 0 0.9V17.1C0 17.5 0.4 18 0.9 18H17.1C17.5 18 18 17.5 18 17.1V0.9C18 0.4 17.5 0 17.1 0ZM8 4H14V6H8V4ZM8 8H14V10H8V8ZM8 12H14V14H8V12ZM4 4H6V6H4V4ZM4 8H6V10H4V8ZM4 12H6V14H4V12Z" fill="#14212B"/>
+          </svg>
+        </div>
+        <div
+          class="ns-view-toggle ns-view-toggle--active"
+          type="button"
+          aria-pressed="true"
+          aria-label="그리드로 보기"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 8V0H8V8H0ZM0 18V10H8V18H0ZM10 8V0H18V8H10ZM10 18V10H18V18H10ZM2 6H6V2H2V6ZM12 6H16V2H12V6ZM12 16H16V12H12V16ZM2 16H6V12H2V16Z" fill="#14212B"/>
+          </svg>
+        </div>
       </div>
   `;
 
