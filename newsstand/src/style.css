@@ -124,6 +124,7 @@
   height: 388px;
   background-color: #d2dae0;
   margin-top: 28px;
+  position: relative;
 }
 
 .ns-press-grid__list {
@@ -143,7 +144,6 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  /* 필요하면 border, padding 등 */
   width: 154.17px;
   height: 96.25px;
 }
@@ -185,4 +185,20 @@
 .ns-press-grid__item:hover .subscribe-btn {
   opacity: 1;
   pointer-events: auto;
+}
+
+.ns-grid-nav__btn {
+  position: absolute;
+  top: 45%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.grid__left {
+  left: -100px;
+}
+
+.grid__right {
+  right: -100px;
 }
