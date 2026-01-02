@@ -1,8 +1,9 @@
 import { createEl } from "../lib/dom";
-import gridViewIcon from "../assets/grid-view.svg";
-import listViewIcon from "../assets/list-view.svg";
+import { store } from "../state/store";
 
 export const createControls = () => {
+  const state = store.getState();
+
   const html = `
       <div class="ns-controls__left">
         <div class="ns-tabs" role="tablist" aria-label="언론사 범위 선택">
@@ -22,7 +23,7 @@ export const createControls = () => {
               class="ns-tab__badge typo-display-medium12 surface-brand-alt"
               aria-label="구독한 언론사 수"
             >
-              8
+              ${state.subscribedPresses.length}
             </span>
           </div>
         </div>
