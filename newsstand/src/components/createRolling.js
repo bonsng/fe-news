@@ -3,6 +3,12 @@ import { getRollingData } from "../lib/pressData";
 import { createRollingNewsCard } from "./createRollingNewsCard";
 
 const ROLLING_NEWS_COUNT = 5;
+const ROLL_INTERVAL = 5000;
+const ROLL_DELAY = 1000;
+
+let leftRollInterval;
+let rightRollInterval;
+let rightDelayTimeout;
 
 let leftTrackState;
 let rightTrackState;
@@ -32,12 +38,17 @@ export const createRolling = () => {
   const rightTrack = rollingWrapper.querySelector(
     ".rolling-right .rolling-track"
   );
+
   leftTrackState = setUpTrack(leftTrack, leftRollingData, 2);
   rightTrackState = setUpTrack(rightTrack, rightRollingData, 2);
+
+  startRolling();
+  addHoverListeners([leftTrack, rightTrack]);
 
   return rollingWrapper;
 };
 
+// Helper function to set up a rolling track
 const setUpTrack = (track, data, trackCount) => {
   track.innerHTML = "";
 
@@ -46,5 +57,72 @@ const setUpTrack = (track, data, trackCount) => {
     track.appendChild(newsCard);
   });
 
-  return { topIdx: 0 };
+  return { topIdx: 0, trackData: data, track };
+};
+
+// Function to update the content of the bottom card
+const updateBottomCardContent = (li, { pressName, title }) => {
+  li.querySelector(".news-provider").textContent = pressName;
+  li.querySelector(".news-headline").textContent = title;
+};
+
+// Function to roll track
+const roll = (state) => {
+  const { trackData, track } = state;
+  if (!trackData || !track || trackData.length === 0) return;
+
+  const firstLi = track.firstElementChild;
+  const rollHeight = firstLi.offsetHeight;
+
+  track.style.transition = "transform 0.5s ease";
+  track.style.transform = `translateY(-${rollHeight}px)`;
+
+  track.addEventListener(
+    "transitionend",
+    () => {
+      track.style.transition = "none";
+      track.style.transform = "translateY(0)";
+
+      track.appendChild(firstLi);
+
+      state.topIdx = (state.topIdx + 1) % trackData.length;
+      const nextIdx = (state.topIdx + 1) % trackData.length;
+      updateBottomCardContent(firstLi, trackData[nextIdx]);
+    },
+    { once: true }
+  );
+};
+
+// Function to start rolling both tracks
+const startRolling = () => {
+  stopRolling();
+  leftRollInterval = setInterval(() => roll(leftTrackState), ROLL_INTERVAL);
+  rightDelayTimeout = setTimeout(() => {
+    rightRollInterval = setInterval(() => roll(rightTrackState), ROLL_INTERVAL);
+  }, ROLL_DELAY);
+};
+
+// Function to stop rolling both tracks
+const stopRolling = () => {
+  clearInterval(leftRollInterval);
+  clearInterval(rightRollInterval);
+  clearTimeout(rightDelayTimeout);
+};
+
+// Function to add hover listeners to pause/resume rolling
+const addHoverListeners = (tracks) => {
+  let hoverTimeout;
+  tracks.forEach((track) => {
+    track.addEventListener("mouseenter", () => {
+      stopRolling();
+      clearTimeout(hoverTimeout);
+    });
+
+    track.addEventListener("mouseleave", () => {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(() => {
+        startRolling();
+      }, ROLL_DELAY);
+    });
+  });
 };
