@@ -41,28 +41,35 @@
 
 /* Rolling Card Styles */
 #roll-wrapper {
-  display: flex;
-  width: 930px;
-  height: 49px;
-  gap: 8px;
-  margin-top: 69px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  cursor: pointer;
+  margin-top: 60px;
 }
 
-#rolling-card-wrapper {
+.rolling-list {
+  height: 49px;
+  overflow: hidden;
+  padding: 15px 16px;
+}
+
+.rolling-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rolling-item {
+  height: 40px;
   display: flex;
-  width: 461px;
-  /* padding: 16px; */
   gap: 16px;
-  align-items: center;
-  padding-left: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-#rolling-card-wrapper h1 {
-  min-width: 50px;
-}
-#rolling-card-wrapper:hover {
-  cursor: pointer;
-}
-#rolling-card-wrapper:hover p {
+
+.rolling-item:hover .news-headline {
   text-decoration: underline;
 }
 

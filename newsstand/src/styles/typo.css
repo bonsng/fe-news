@@ -25,7 +25,6 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-r);
-  line-height: var(--line-height-auto);
 }
 
 /* display-bold12 : $bold.S */
@@ -33,7 +32,6 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-s);
-  line-height: var(--line-height-auto);
 }
 
 /* display-medium16 : $medium.M */
@@ -100,7 +98,6 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-r);
-  line-height: 100%;
 }
 
 /* hover-medium16 : $medium.M.underline */
