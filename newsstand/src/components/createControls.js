@@ -10,35 +10,58 @@ export const createControls = () => {
   controlsWrapper.setAttribute("aria-label", "언론사 목록 보기 설정");
 
   // Tabs Toggle
-  const tabs = controlsWrapper.querySelectorAll(".ns-tab-left, .ns-tab-right");
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const isAllTab = tab.classList.contains("ns-tab-left");
-      const nextTab = isAllTab ? "all" : "subscriptions";
-      if (state.tab === nextTab) return;
-      actions.setTab(nextTab);
-    });
-  });
+  controlTabs(controlsWrapper, state.tab, actions.setTab);
 
   // View Toggle
-  const viewToggles = controlsWrapper.querySelectorAll(".ns-view-toggle");
+  controlViews(controlsWrapper, state.view, actions.setView);
+
+  return controlsWrapper;
+};
+
+const controlViews = (wrapper, viewState, setView) => {
+  const viewToggles = wrapper.querySelectorAll(".ns-view-toggle");
   viewToggles.forEach((toggle) => {
     toggle.addEventListener("click", () => {
       const isGridView = toggle.classList.contains("ns-view-grid");
       const nextView = isGridView ? "grid" : "list";
-      if (state.view === nextView) return;
-      actions.setView(nextView);
+      if (viewState === nextView) return;
+      setView(nextView);
     });
   });
+};
 
-  return controlsWrapper;
+const controlTabs = (wrapper, tabState, setTab) => {
+  const tabEls = wrapper.querySelectorAll(".ns-tabs > div");
+  setActiveTabUI(tabState, tabEls);
+
+  tabEls.forEach((tabEl) => {
+    tabEl.addEventListener("click", () => {
+      const isAllTab = tabEl.classList.contains("ns-tab-left");
+      const nextTab = isAllTab ? "all" : "subscriptions";
+      if (tabState === nextTab) return;
+      setTab(nextTab);
+    });
+  });
+};
+
+const setActiveTabUI = (tabState, allTab) => {
+  const isAll = tabState === "all";
+
+  allTab.forEach((tabEl) => {
+    const isLeftTab = tabEl.classList.contains("ns-tab-left");
+    const isActive = (isAll && isLeftTab) || (!isAll && !isLeftTab);
+
+    tabEl.classList.toggle("typo-selected-bold16", isActive);
+    tabEl.classList.toggle("typo-available-medium16", !isActive);
+    tabEl.setAttribute("aria-selected", String(isActive));
+  });
 };
 
 const createControlsMarkup = (subscriptionLenghth) => `
       <div class="ns-controls__left">
         <div class="ns-tabs" role="tablist" aria-label="언론사 범위 선택">
           <div
-            class="ns-tab-left typo-selected-bold16"
+            class="ns-tab-left"
             aria-selected="true"
           >
             전체 언론사
@@ -48,7 +71,7 @@ const createControlsMarkup = (subscriptionLenghth) => `
             class="ns-tab-right"
             aria-selected="false"
           >
-            <p class="typo-available-medium16">내가 구독한 언론사</p>
+          내가 구독한 언론사
              <span
               class="ns-tab__badge typo-display-medium12 surface-brand-alt"
               aria-label="구독한 언론사 수"

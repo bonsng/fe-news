@@ -1,12 +1,12 @@
 // src/components/pressGrid.js
 import { createEl } from "../lib/dom";
 import { getGridData } from "../lib/pressData";
-import { actions, store } from "../state/store";
-import { createGridCard } from "./createGridCard";
+import { actions } from "../state/store";
+import { createGridCardList } from "./createGridCard";
 
-export const createGrid = () => {
-  const state = store.getState();
-  const gridList = getGridData();
+export const createGrid = (state) => {
+  const gridList =
+    state.tab === "all" ? getGridData() : state.subscribedPresses;
 
   // Pagination logic
   const totalPages = Math.max(1, Math.min(4, Math.ceil(gridList.length / 24)));
@@ -26,12 +26,7 @@ export const createGrid = () => {
   nsGrid.setAttribute("aria-label", "언론사 목록");
 
   const list = nsGrid.querySelector(".ns-press-grid__list");
-
-  // render paginated items
-  paginatedGridList.forEach((press) => {
-    const item = createGridCard(press);
-    list.appendChild(item);
-  });
+  list.append(...createGridCardList(paginatedGridList));
 
   nsGrid.append(list, createGridNav(currentPage, totalPages));
 

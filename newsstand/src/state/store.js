@@ -29,12 +29,18 @@ export const actions = {
     });
   },
 
-  toggleSubscribe(pressId) {
+  setSubscribe(press) {
     store.setState((prev) => {
-      const has = prev.subscribedPresses.includes(pressId);
-      const nextIds = has
-        ? prev.subscribedPresses.filter((id) => id !== pressId)
-        : [...prev.subscribedPresses, pressId];
+      const nextIds = [...prev.subscribedPresses, press];
+      return { ...prev, subscribedPresses: nextIds };
+    });
+  },
+
+  setUnsubscribe(press) {
+    store.setState((prev) => {
+      const nextIds = prev.subscribedPresses.filter(
+        (item) => item.pressName !== press.pressName
+      );
       return { ...prev, subscribedPresses: nextIds };
     });
   },
