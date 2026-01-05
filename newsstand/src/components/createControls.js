@@ -1,10 +1,40 @@
 import { createEl } from "../lib/dom";
-import { store } from "../state/store";
+import { store, actions } from "../state/store";
 
 export const createControls = () => {
   const state = store.getState();
 
-  const html = `
+  const html = createControlsMarkup(state.subscribedPresses.length);
+
+  const controlsWrapper = createEl("section", "ns-controls", html);
+  controlsWrapper.setAttribute("aria-label", "언론사 목록 보기 설정");
+
+  // Tabs Toggle
+  const tabs = controlsWrapper.querySelectorAll(".ns-tab-left, .ns-tab-right");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const isAllTab = tab.classList.contains("ns-tab-left");
+      const nextTab = isAllTab ? "all" : "subscriptions";
+      if (state.tab === nextTab) return;
+      actions.setTab(nextTab);
+    });
+  });
+
+  // View Toggle
+  const viewToggles = controlsWrapper.querySelectorAll(".ns-view-toggle");
+  viewToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const isGridView = toggle.classList.contains("ns-view-grid");
+      const nextView = isGridView ? "grid" : "list";
+      if (state.view === nextView) return;
+      actions.setView(nextView);
+    });
+  });
+
+  return controlsWrapper;
+};
+
+const createControlsMarkup = (subscriptionLenghth) => `
       <div class="ns-controls__left">
         <div class="ns-tabs" role="tablist" aria-label="언론사 범위 선택">
           <div
@@ -23,7 +53,7 @@ export const createControls = () => {
               class="ns-tab__badge typo-display-medium12 surface-brand-alt"
               aria-label="구독한 언론사 수"
             >
-              ${state.subscribedPresses.length}
+              ${subscriptionLenghth}
             </span>
           </div>
         </div>
@@ -31,7 +61,7 @@ export const createControls = () => {
 
       <div class="ns-controls__right" aria-label="보기 방식 선택">
         <div
-          class="ns-view-toggle"
+          class="ns-view-toggle ns-view-list"
           type="button"
           aria-pressed="false"
           aria-label="리스트로 보기"
@@ -41,7 +71,7 @@ export const createControls = () => {
           </svg>
         </div>
         <div
-          class="ns-view-toggle ns-view-toggle--active"
+          class="ns-view-toggle ns-view-toggle--active ns-view-grid"
           type="button"
           aria-pressed="true"
           aria-label="그리드로 보기"
@@ -52,9 +82,3 @@ export const createControls = () => {
         </div>
       </div>
   `;
-
-  const controlsWrapper = createEl("section", "ns-controls", html);
-  controlsWrapper.setAttribute("aria-label", "언론사 목록 보기 설정");
-
-  return controlsWrapper;
-};

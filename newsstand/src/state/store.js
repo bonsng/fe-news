@@ -1,8 +1,8 @@
 import { createStore } from "./createStore";
 
 const initialState = {
-  tab: "all",
-  view: "grid",
+  tab: "all", // "all" | "subscriptions"
+  view: "grid", // "grid" | "list"
   subscribedPresses: [],
   page: 1,
 };
