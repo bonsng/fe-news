@@ -120,6 +120,10 @@
   gap: 24px;
 }
 
+.ns-tabs > div:hover {
+  cursor: pointer;
+}
+
 .ns-view-toggle--active svg path {
   fill: var(--color-text-point);
 }
