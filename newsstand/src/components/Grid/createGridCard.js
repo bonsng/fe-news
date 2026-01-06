@@ -1,5 +1,5 @@
-import { createEl } from "../lib/dom";
-import { store, actions } from "../state/store";
+import { createEl } from "../../lib/dom";
+import { store, actions } from "../../state/store";
 
 const PRESS_PER_PAGE = 24;
 

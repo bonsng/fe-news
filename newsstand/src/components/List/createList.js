@@ -1,5 +1,5 @@
-import { createEl } from "../lib/dom";
-import { groupPressByCategory, PRESS_CATEGORIES } from "../lib/pressData";
+import { createEl } from "../../lib/dom";
+import { groupPressByCategory, PRESS_CATEGORIES } from "../../lib/pressData";
 
 let listPressData;
 

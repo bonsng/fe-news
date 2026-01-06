@@ -1,8 +1,8 @@
 import { createEl, render } from "../lib/dom";
 import { store } from "../state/store";
 import { createControls } from "./createControls";
-import { createGrid } from "./createGrid";
-import { createList } from "./createList";
+import { createGrid } from "./Grid/createGrid";
+import { createList } from "./List/createList";
 
 export const createNewsContents = () => {
   const contentWrapper = createEl("div", "", "");
