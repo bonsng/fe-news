@@ -22,7 +22,7 @@ const createContents = (state) => {
   const frag = document.createDocumentFragment();
   frag.append(
     createControls(),
-    state.view === "grid" ? createGrid(state) : createList()
+    state.view === "grid" ? createGrid() : createList()
   );
   return frag;
 };
