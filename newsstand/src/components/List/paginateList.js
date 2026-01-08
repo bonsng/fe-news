@@ -1,9 +1,9 @@
 import { store, actions } from "../../state/store";
 import { PRESS_CATEGORIES } from "../../lib/pressData";
 import { createEl } from "../../lib/dom.js";
+import { createAutoPager } from "./createAutoPager.js";
 
-let timeoutId = null;
-const LIST_DELAY_MS = 2000;
+const LIST_DELAY_MS = 20000;
 
 export const paginateList = () => {
   const state = store.getState();
@@ -12,15 +12,17 @@ export const paginateList = () => {
     listPressData[PRESS_CATEGORIES[listCategoryIdx]].presses[listPressIdx];
   const currentCategory = PRESS_CATEGORIES[listCategoryIdx];
   const totalPresses = listPressData[currentCategory].presses.length;
-  clearTimeout(timeoutId);
-  timeoutId = setTimeout(() => {
-    actions.setListIdx(getNextIdx(listCategoryIdx, listPressIdx, totalPresses));
-  }, LIST_DELAY_MS);
 
-  return { listNav: createListNav(currentCategory, totalPresses), nowPress };
+  const autoPager = createAutoPager({ actions, intervalMs: LIST_DELAY_MS });
+  autoPager.start();
+
+  return {
+    listNav: createListNav(currentCategory, totalPresses, autoPager),
+    nowPress,
+  };
 };
 
-const createListNav = (currentCategory, totalPresses) => {
+const createListNav = (currentCategory, totalPresses, autoPager) => {
   const nav = createEl(
     "nav",
     "ns-press-list__nav",
@@ -40,7 +42,7 @@ const createListNav = (currentCategory, totalPresses) => {
   const navList = nav.querySelector(".ns-press-list__nav-list");
   PRESS_CATEGORIES.forEach((category, idx) => {
     navList.append(
-      createNavItem(category, category === currentCategory, totalPresses, idx)
+      createNavItem(idx, category === currentCategory, totalPresses, autoPager)
     );
   });
 
@@ -48,33 +50,23 @@ const createListNav = (currentCategory, totalPresses) => {
   const btnNext = nav.querySelector('button[data-nav="next"]');
 
   btnPrev.addEventListener("click", () => {
-    clearTimeout(timeoutId);
-    const { listCategoryIdx, listPressIdx } = store.getState();
-    const { categoryIdx, pressIdx } = getPrevIdx(listCategoryIdx, listPressIdx);
-    actions.setListIdx({ categoryIdx, pressIdx });
+    autoPager.stop();
+    actions.setPrev();
   });
 
   btnNext.addEventListener("click", () => {
-    clearTimeout(timeoutId);
-    const { listCategoryIdx, listPressIdx, listPressData } = store.getState();
-    const totalLength =
-      listPressData[PRESS_CATEGORIES[listCategoryIdx]].presses.length;
-    const { categoryIdx, pressIdx } = getNextIdx(
-      listCategoryIdx,
-      listPressIdx,
-      totalLength
-    );
-    actions.setListIdx({ categoryIdx, pressIdx });
+    autoPager.stop();
+    actions.setNext();
   });
 
   return nav;
 };
 
-const createNavItem = (category, isActive, totalPresses, categoryIdx) => {
+const createNavItem = (categoryIdx, isActive, totalPresses, autoPager) => {
   const navItem = createEl(
     "li",
     "ns-press-list__nav-item typo-available-medium14",
-    `${category}${
+    `${PRESS_CATEGORIES[categoryIdx]}${
       isActive
         ? `<span class="ns-press-list__nav-item--active-indicator">${
             store.getState().listPressIdx + 1
@@ -84,34 +76,8 @@ const createNavItem = (category, isActive, totalPresses, categoryIdx) => {
   );
 
   navItem.addEventListener("click", () => {
-    clearTimeout(timeoutId);
-    actions.setListIdx({ categoryIdx, pressIdx: 0 });
+    autoPager.stop();
+    actions.setCategory(categoryIdx);
   });
   return navItem;
-};
-
-const getNextIdx = (currentCategoryIdx, currentPressIdx, totalLength) => {
-  if (currentPressIdx + 1 < totalLength) {
-    return { categoryIdx: currentCategoryIdx, pressIdx: currentPressIdx + 1 };
-  } else {
-    const nextCategoryIdx = (currentCategoryIdx + 1) % PRESS_CATEGORIES.length;
-    return { categoryIdx: nextCategoryIdx, pressIdx: 0 };
-  }
-};
-
-const getPrevIdx = (currentCategoryIdx, currentPressIdx) => {
-  if (currentPressIdx - 1 >= 0) {
-    return { categoryIdx: currentCategoryIdx, pressIdx: currentPressIdx - 1 };
-  } else {
-    const prevCategoryIdx =
-      (currentCategoryIdx - 1 + PRESS_CATEGORIES.length) %
-      PRESS_CATEGORIES.length;
-    const prevCategoryPressesLength =
-      store.getState().listPressData[PRESS_CATEGORIES[prevCategoryIdx]].presses
-        .length;
-    return {
-      categoryIdx: prevCategoryIdx,
-      pressIdx: prevCategoryPressesLength - 1,
-    };
-  }
 };

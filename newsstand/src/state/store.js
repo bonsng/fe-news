@@ -1,3 +1,5 @@
+import { PRESS_CATEGORIES } from "../lib/pressData";
+import { getNextIdx, getPrevIdx } from "../lib/utils";
 import { createStore } from "./createStore";
 
 const initialState = {
@@ -67,5 +69,27 @@ export const actions = {
     store.setState((prev) =>
       prev.listPressData === data ? prev : { ...prev, listPressData: data }
     );
+  },
+
+  setNext() {
+    const { listCategoryIdx, listPressIdx, listPressData } = store.getState();
+    const totalLength =
+      listPressData[PRESS_CATEGORIES[listCategoryIdx]].presses.length;
+    const { categoryIdx, pressIdx } = getNextIdx(
+      listCategoryIdx,
+      listPressIdx,
+      totalLength
+    );
+    actions.setListIdx({ categoryIdx, pressIdx });
+  },
+
+  setPrev() {
+    const { listCategoryIdx, listPressIdx } = store.getState();
+    const { categoryIdx, pressIdx } = getPrevIdx(listCategoryIdx, listPressIdx);
+    actions.setListIdx({ categoryIdx, pressIdx });
+  },
+
+  setCategory(categoryIdx) {
+    actions.setListIdx({ categoryIdx, pressIdx: 0 });
   },
 };
